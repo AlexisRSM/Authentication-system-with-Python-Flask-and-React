@@ -8,11 +8,6 @@ from flask_cors import CORS
 
 api = Blueprint('api', __name__)
 
-# Allow CORS requests to this API
-CORS(api)
-
-
-
 
 
 
@@ -21,6 +16,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'  # Change this to y
 app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'  # Change this to a secure key
 db = SQLAlchemy(app)
 jwt = JWTManager(app)
+# Allow CORS requests to this API
+CORS(app)
+
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
